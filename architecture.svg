@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1200" height="780" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="600" y="36" text-anchor="middle" font-size="24" font-weight="bold" fill="#232F3E">Amazon Aurora — Reference Architecture</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#666666">User &#8594; Route 53 &#8594; CloudFront / WAF &#8594; ALB &#8594; ECS Fargate &#8594; Aurora Cluster (Writer + Readers) &#8594; Aurora Storage</text>
+
+  <!-- Users -->
+  <g>
+    <circle cx="60" cy="180" r="26" fill="#FF9900" stroke="#CC7A00" stroke-width="2"/>
+    <circle cx="60" cy="172" r="8" fill="#ffffff"/>
+    <path d="M 46 196 Q 60 180 74 196" stroke="#ffffff" stroke-width="3" fill="none"/>
+    <text x="60" y="226" text-anchor="middle" font-size="13" font-weight="bold" fill="#232F3E">Users</text>
+    <text x="60" y="242" text-anchor="middle" font-size="11" fill="#666666">Web / Mobile</text>
+  </g>
+
+  <!-- Route 53 -->
+  <g>
+    <rect x="130" y="140" width="130" height="80" rx="6" fill="#8C4FFF" stroke="#6B21C8" stroke-width="2"/>
+    <text x="195" y="168" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">Route 53</text>
+    <text x="195" y="188" text-anchor="middle" font-size="11" fill="#E8D9FF">DNS + Health Checks</text>
+    <text x="195" y="204" text-anchor="middle" font-size="11" fill="#E8D9FF">Failover Routing</text>
+  </g>
+
+  <!-- CloudFront -->
+  <g>
+    <rect x="300" y="140" width="130" height="80" rx="6" fill="#8C4FFF" stroke="#6B21C8" stroke-width="2"/>
+    <text x="365" y="168" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">CloudFront</text>
+    <text x="365" y="188" text-anchor="middle" font-size="11" fill="#E8D9FF">Global CDN Edge</text>
+    <text x="365" y="204" text-anchor="middle" font-size="11" fill="#E8D9FF">Static Caching</text>
+  </g>
+
+  <!-- WAF -->
+  <g>
+    <rect x="470" y="140" width="130" height="80" rx="6" fill="#D13239" stroke="#9E1B20" stroke-width="2"/>
+    <text x="535" y="168" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">AWS WAF</text>
+    <text x="535" y="188" text-anchor="middle" font-size="11" fill="#FBD9DB">SQLi / XSS Rules</text>
+    <text x="535" y="204" text-anchor="middle" font-size="11" fill="#FBD9DB">Rate Limiting</text>
+  </g>
+
+  <!-- Arrows top row -->
+  <g stroke="#232F3E" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="88" y1="180" x2="128" y2="180"/>
+    <line x1="262" y1="180" x2="298" y2="180"/>
+    <line x1="432" y1="180" x2="468" y2="180"/>
+  </g>
+  <text x="108" y="168" text-anchor="middle" font-size="10" fill="#232F3E">HTTPS</text>
+  <text x="280" y="168" text-anchor="middle" font-size="10" fill="#232F3E">DNS</text>
+  <text x="450" y="168" text-anchor="middle" font-size="10" fill="#232F3E">Filtered</text>
+
+  <!-- VPC -->
+  <rect x="40" y="280" width="1120" height="440" rx="8" fill="#EAF5EA" stroke="#3D9E4D" stroke-width="2"/>
+  <text x="60" y="306" font-size="15" font-weight="bold" fill="#2E7D32">VPC — 10.0.0.0/16 (eu-west-1)</text>
+
+  <!-- AZ-1 dashed box -->
+  <rect x="60" y="320" width="520" height="380" rx="6" fill="none" stroke="#3D9E4D" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <text x="76" y="344" font-size="13" font-weight="bold" fill="#2E7D32">Availability Zone 1 — eu-west-1a</text>
+
+  <!-- AZ-2 dashed box -->
+  <rect x="620" y="320" width="520" height="380" rx="6" fill="none" stroke="#3D9E4D" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <text x="636" y="344" font-size="13" font-weight="bold" fill="#2E7D32">Availability Zone 2 — eu-west-1b</text>
+
+  <!-- Public subnet AZ-1 -->
+  <rect x="80" y="356" width="480" height="86" rx="5" fill="#FFF3E0" stroke="#E67E22" stroke-width="1.5"/>
+  <text x="94" y="378" font-size="12" font-weight="bold" fill="#B25E09">Public Subnet — 10.0.1.0/24</text>
+  <rect x="100" y="388" width="180" height="42" rx="5" fill="#8C4FFF" stroke="#6B21C8" stroke-width="1.5"/>
+  <text x="190" y="406" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">ALB</text>
+  <text x="190" y="422" text-anchor="middle" font-size="10" fill="#E8D9FF">Application Load Balancer</text>
+  <text x="310" y="412" font-size="11" fill="#666666">Internet-facing, TLS termination</text>
+
+  <!-- App subnet AZ-1 -->
+  <rect x="80" y="454" width="480" height="86" rx="5" fill="#FFF8E1" stroke="#E67E22" stroke-width="1.5"/>
+  <text x="94" y="476" font-size="12" font-weight="bold" fill="#B25E09">App Subnet (private) — 10.0.11.0/24</text>
+  <rect x="100" y="486" width="180" height="42" rx="5" fill="#FF9900" stroke="#CC7A00" stroke-width="1.5"/>
+  <text x="190" y="504" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">ECS Fargate</text>
+  <text x="190" y="520" text-anchor="middle" font-size="10" fill="#FFF3D6">App Tier — Tasks</text>
+  <text x="310" y="512" font-size="11" fill="#666666">Auto Scaling 2–10 tasks</text>
+
+  <!-- DB subnet AZ-1 -->
+  <rect x="80" y="552" width="480" height="128" rx="5" fill="#E3F2FD" stroke="#1976D2" stroke-width="1.5"/>
+  <text x="94" y="574" font-size="12" font-weight="bold" fill="#0D47A1">DB Subnet (private, isolated) — 10.0.21.0/24</text>
+  <rect x="100" y="584" width="200" height="80" rx="5" fill="#527FFF" stroke="#1D4ED8" stroke-width="1.5"/>
+  <text x="200" y="606" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">Aurora Writer</text>
+  <text x="200" y="624" text-anchor="middle" font-size="10" fill="#DCE6FF">db.serverless (0.5–16 ACU)</text>
+  <text x="200" y="640" text-anchor="middle" font-size="10" fill="#DCE6FF">PostgreSQL 16 — Primary</text>
+  <text x="200" y="654" text-anchor="middle" font-size="10" fill="#DCE6FF">Cluster Endpoint (writes)</text>
+  <rect x="330" y="584" width="200" height="80" rx="5" fill="#7FA6FF" stroke="#1D4ED8" stroke-width="1.5"/>
+  <text x="430" y="606" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">Aurora Reader 1</text>
+  <text x="430" y="624" text-anchor="middle" font-size="10" fill="#EAF0FF">db.serverless — Read Replica</text>
+  <text x="430" y="640" text-anchor="middle" font-size="10" fill="#EAF0FF">&lt; 10 ms replication lag</text>
+  <text x="430" y="654" text-anchor="middle" font-size="10" fill="#EAF0FF">Reader Endpoint (reads)</text>
+
+  <!-- Public subnet AZ-2 -->
+  <rect x="640" y="356" width="480" height="86" rx="5" fill="#FFF3E0" stroke="#E67E22" stroke-width="1.5"/>
+  <text x="654" y="378" font-size="12" font-weight="bold" fill="#B25E09">Public Subnet — 10.0.2.0/24</text>
+  <text x="654" y="410" font-size="11" fill="#666666">NAT Gateway — outbound internet for private subnets</text>
+  <rect x="900" y="388" width="180" height="42" rx="5" fill="#8C4FFF" stroke="#6B21C8" stroke-width="1.5"/>
+  <text x="990" y="406" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">NAT Gateway</text>
+  <text x="990" y="422" text-anchor="middle" font-size="10" fill="#E8D9FF">Egress only</text>
+
+  <!-- App subnet AZ-2 -->
+  <rect x="640" y="454" width="480" height="86" rx="5" fill="#FFF8E1" stroke="#E67E22" stroke-width="1.5"/>
+  <text x="654" y="476" font-size="12" font-weight="bold" fill="#B25E09">App Subnet (private) — 10.0.12.0/24</text>
+  <rect x="660" y="486" width="180" height="42" rx="5" fill="#FF9900" stroke="#CC7A00" stroke-width="1.5"/>
+  <text x="750" y="504" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">ECS Fargate</text>
+  <text x="750" y="520" text-anchor="middle" font-size="10" fill="#FFF3D6">App Tier — Tasks</text>
+  <text x="870" y="512" font-size="11" fill="#666666">Auto Scaling 2–10 tasks</text>
+
+  <!-- DB subnet AZ-2 -->
+  <rect x="640" y="552" width="480" height="128" rx="5" fill="#E3F2FD" stroke="#1976D2" stroke-width="1.5"/>
+  <text x="654" y="574" font-size="12" font-weight="bold" fill="#0D47A1">DB Subnet (private, isolated) — 10.0.22.0/24</text>
+  <rect x="660" y="584" width="200" height="80" rx="5" fill="#7FA6FF" stroke="#1D4ED8" stroke-width="1.5"/>
+  <text x="760" y="606" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">Aurora Reader 2</text>
+  <text x="760" y="624" text-anchor="middle" font-size="10" fill="#EAF0FF">db.serverless — Read Replica</text>
+  <text x="760" y="640" text-anchor="middle" font-size="10" fill="#EAF0FF">Failover target (&lt; 30 s)</text>
+  <text x="760" y="654" text-anchor="middle" font-size="10" fill="#EAF0FF">Reader Endpoint (reads)</text>
+  <rect x="890" y="584" width="200" height="80" rx="5" fill="#7FA6FF" stroke="#1D4ED8" stroke-width="1.5"/>
+  <text x="990" y="606" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">Aurora Reader 3</text>
+  <text x="990" y="624" text-anchor="middle" font-size="10" fill="#EAF0FF">Analytics / Reporting</text>
+  <text x="990" y="640" text-anchor="middle" font-size="10" fill="#EAF0FF">Custom Endpoint</text>
+  <text x="990" y="654" text-anchor="middle" font-size="10" fill="#EAF0FF">Isolated from OLTP reads</text>
+
+  <!-- Arrows: WAF -> ALB, ALB -> Fargate, Fargate -> Aurora -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#232F3E"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#1D4ED8"/>
+    </marker>
+  </defs>
+  <g stroke="#232F3E" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M 600 220 L 600 268 L 190 268 L 190 354"/>
+  </g>
+  <text x="612" y="252" font-size="10" fill="#232F3E">HTTPS (WAF-filtered)</text>
+  <g stroke="#232F3E" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="190" y1="432" x2="190" y2="452"/>
+    <line x1="750" y1="432" x2="750" y2="452"/>
+  </g>
+  <text x="204" y="446" font-size="10" fill="#232F3E">HTTP</text>
+  <g stroke="#1D4ED8" stroke-width="2" fill="none" marker-end="url(#arrowBlue)">
+    <line x1="190" y1="530" x2="190" y2="550"/>
+    <line x1="750" y1="530" x2="750" y2="550"/>
+  </g>
+  <text x="204" y="544" font-size="10" fill="#1D4ED8">SQL (TLS) — writes via cluster endpoint</text>
+  <text x="764" y="544" font-size="10" fill="#1D4ED8">SQL (TLS) — reads via reader endpoint</text>
+
+  <!-- Aurora storage strip -->
+  <rect x="40" y="726" width="1120" height="34" rx="5" fill="#E3F2FD" stroke="#1976D2" stroke-width="1.5"/>
+  <text x="60" y="747" font-size="12" font-weight="bold" fill="#0D47A1">Aurora Storage — Cluster Volume</text>
+  <text x="430" y="747" font-size="12" fill="#0D47A1">6-way replicated across 3 AZs &#8226; auto-scales 10 GiB &#8594; 128 TiB &#8226; self-healing &#8226; continuous backup to S3 (35-day retention)</text>
+
+  <defs>
+    <marker id="arrow2" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#1D4ED8"/>
+    </marker>
+  </defs>
+</svg>
