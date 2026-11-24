@@ -18,6 +18,10 @@
 
 ---
 
+## 🌍 In plain words — what is this, really?
+
+Picture a very busy library whose most popular book is never stored as a single copy: the library keeps six copies spread across three buildings, so if one building floods, readers barely notice and no page is ever lost. Aurora is that idea applied to a database — it speaks the same language as MySQL or PostgreSQL, so your app barely changes, but underneath, your data is copied six ways across three Availability Zones on storage that grows automatically as you add more "books". One main librarian handles writing new entries (the writer instance), while up to fifteen helpers handle reading requests at once (read replicas), each only milliseconds behind. If the main librarian goes home sick, a helper is promoted in under thirty seconds and the front-desk sign — the cluster endpoint — keeps pointing visitors to the right person, so your app does not need a new address. Aurora Serverless v2 adds flexible staffing: more librarians appear automatically on busy days and the team shrinks when the library is quiet, and you pay for the capacity actually used. It costs more than a plain single-copy library, which is why this guide also covers when ordinary RDS is the smarter choice.
+
 ## 🧠 Why Aurora (and when not to use it)
 
 | Feature | Aurora | RDS MySQL / PostgreSQL | When Aurora wins |
@@ -121,16 +125,6 @@ client.execute("SELECT * FROM orders WHERE status = :status",
 | `VolumeBytesUsed` | > 80% of 128 TB | Approaching storage limit |
 | `Deadlocks` / `BlockedTransactions` | > 0 | Lock contention |
 | `CPUUtilization` (writer) | > 70% sustained | Writer is the bottleneck |
-
----
-
-## 🧩 Quiz Teaser
-
-Can you answer these? Full quiz in [`quiz.md`](quiz.md).
-
-1. How many copies of your data does an Aurora cluster volume keep, and across how many AZs?
-2. Your writer fails over — which endpoint keeps working without a code change?
-3. When is Aurora I/O-Optimized cheaper than Standard?
 
 ---
 
